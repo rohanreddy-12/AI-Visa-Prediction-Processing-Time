@@ -34,6 +34,8 @@ def get_season(date):
     else: return 'Fall'
 
 df['season'] = df['application_date'].apply(get_season)
+df_clean = df.copy()
+df_clean.to_csv('h1b_data_cleaned_for_eda.csv', index=False)
 # one hot encoding
 if 'full_time_position' in df.columns:
     df['full_time_position'] = df['full_time_position'].map({'Y': 1, 'N': 0})
@@ -56,4 +58,5 @@ df_encoded.to_csv(output_file, index=False)
 
 print(f"\nSuccess! Preprocessing complete.")
 print(f"Final dataset shape: {df_encoded.shape}")
+
 print(f"Saved cleaned and encoded data to: {output_file}")

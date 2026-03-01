@@ -28,6 +28,3 @@ Visa applicants often face long waiting times and uncertainty regarding the prog
 * **Seasonal Trends:** `![Seasons](outputs/your_season_image.png)`
 * **Feature Correlation:** `![Heatmap](outputs/your_heatmap_image.png)`
 
-   ```bash
-   git clone [https://github.com/rohanreddy-12/AI-Visa-Prediction-Processing-Time.git](https://github.com/rohanreddy-12/AI-Visa-Prediction-Processing-Time.git)
-   cd AI-Visa-Prediction-Processing-Time

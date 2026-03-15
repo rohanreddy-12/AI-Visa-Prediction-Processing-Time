@@ -47,7 +47,6 @@ Visa applicants often face long waiting times and uncertainty regarding the prog
 * **Seasonal Trends:** `![Seasons](outputs/your_season_image.png)`
 * **Feature Correlation:** `![Heatmap](outputs/your_heatmap_image.png)`
 
-# AI-Visa-Prediction-Processing-Time
 
 
 

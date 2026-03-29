@@ -14,7 +14,7 @@
         AI Visa Processing Time Estimator
     </h1>
 
-    <!-- ERROR MESSAGE -->
+    <!-- ERROR -->
     {% if error %}
     <div class="mb-4 bg-red-500/20 border border-red-500 p-4 rounded">
         ⚠️ {{ error }}
@@ -22,7 +22,7 @@
     {% endif %}
 
     <!-- FORM -->
-    <form action="/predict" method="POST"
+    <form action="/" method="POST"
           class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#111827] p-6 rounded-xl">
 
         <div>
@@ -72,7 +72,7 @@
     </div>
     {% endif %}
 
-    <!-- DYNAMIC GRAPHS -->
+    <!-- GRAPHS -->
     {% if plots %}
     <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
         <img src="data:image/png;base64,{{ plots.hist }}">

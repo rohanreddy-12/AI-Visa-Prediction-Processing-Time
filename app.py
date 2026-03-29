@@ -11,11 +11,14 @@ from src.predict import predict
 
 app = Flask(__name__)
 
+# -------------------------------
 # Load metrics safely
+# -------------------------------
 try:
     with open("artifacts/training_report.json") as f:
         metrics = json.load(f)
-except:
+except Exception as e:
+    print("Metrics load error:", e)
     metrics = {"error": "metrics not found"}
 
 
@@ -46,9 +49,9 @@ def generate_plots(df):
         plots["visa"] = base64.b64encode(buf.read()).decode("utf-8")
         plt.close()
 
-        # Country
+        # Country (FIXED)
         plt.figure()
-        sns.boxplot(x="applicant_country", y="processing_time_days", data=df)
+        sns.boxplot(x="country", y="processing_time_days", data=df)
         plt.title("Processing Time by Country")
         buf = io.BytesIO()
         plt.savefig(buf, format="png")
@@ -57,13 +60,13 @@ def generate_plots(df):
         plt.close()
 
     except Exception as e:
-        print("Plot Error:", e)
+        print("🔥 Plot Error:", e)
 
     return plots
 
 
 # -------------------------------
-# SINGLE ROUTE
+# MAIN ROUTE
 # -------------------------------
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -80,6 +83,8 @@ def home():
         visa_type = request.form.get("visa_type")
         office = request.form.get("office")
         month = request.form.get("month")
+
+        print("📥 Inputs:", country, visa_type, office, month)
 
         # Validation
         if not month:
@@ -99,17 +104,26 @@ def home():
 
         # Prediction
         result = predict(data)
+        print("🔮 Prediction:", result)
 
-        # Load dataset
-        df = pd.read_csv("data/processed_data.csv")
+        # Load dataset safely
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(BASE_DIR, "h1b_data_preprocessed_final.csv")
 
-        # Safe filtering
+        print("📂 Loading dataset from:", file_path)
+
+        df = pd.read_csv(file_path)
+
+        print("📊 Columns:", df.columns)
+
+        # FIXED filtering
         filtered_df = df[
-            (df["applicant_country"] == country) &
+            (df["country"] == country) &
             (df["visa_type"] == visa_type)
         ]
 
         if filtered_df.empty:
+            print("⚠️ No matching data, using full dataset")
             filtered_df = df
 
         plots = generate_plots(filtered_df)
@@ -122,6 +136,7 @@ def home():
         )
 
     except ValueError as e:
+        print("⚠️ ValueError:", e)
         return render_template(
             "index.html",
             error=str(e),
@@ -129,10 +144,10 @@ def home():
         )
 
     except Exception as e:
-        print("ERROR:", e)
+        print("🔥 ERROR:", e)
         return render_template(
             "index.html",
-            error=str(e),  # 👈 show real error
+            error=str(e),   # shows real error
             metrics=json.dumps(metrics, indent=2)
         )
 

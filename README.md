@@ -1,159 +1,43 @@
-# 🚀 AI-Enabled Visa Status Prediction & Processing Time Estimator
+# AI Enabled Visa Status Prediction and Processing Time Estimator
 
-## 📌 Project Overview
+[![Deployed Application](https://img.shields.io/badge/Live_Demo-Render-blue?style=for-the-badge)](https://ai-visa-prediction-processing-time-4.onrender.com/)
 
-Visa applicants often face uncertainty regarding processing timelines. This project leverages **machine learning** and historical visa data to predict **processing times** and provide insights into patterns affecting delays.
+## 📌 Overview
+The **AI Enabled Visa Status Prediction and Processing Time Estimator** is a machine learning-driven web application designed to help applicants and processing agencies predict the likelihood of a visa approval. Additionally, the system provides an estimated processing time based on historical data and applicant profiling. 
 
-The system analyzes factors such as:
+This project was developed as part of the **Infosys Springboard Virtual Internship** to solve real-world challenges in immigration and visa processing using Artificial Intelligence.
 
-* Applicant country
-* Visa type
-* Processing office
-* Seasonal trends
+## 🚀 Live Demo
+Experience the live application here: **[Visa Prediction App](https://ai-visa-prediction-processing-time-4.onrender.com/)**
 
-👉 The goal is to **improve transparency and decision-making** for applicants.
-
----
-
-## 🎯 Key Features
-
-✅ Predict visa processing time using ML
-✅ Dynamic data visualizations (auto-updated per input)
-✅ Trend analysis across countries, visa types, and offices
-✅ Interactive web interface (Flask + Tailwind)
-✅ Production deployment on cloud
-
----
+## ✨ Features
+* **Visa Status Prediction:** Predicts whether a visa application is likely to be Certified, Denied, or require further review based on applicant data (e.g., job title, education, prevailing wage).
+* **Processing Time Estimation:** Provides an approximate timeline for the visa decision process using historical trends.
+* **Interactive Web Interface:** A clean, user-friendly frontend for seamlessly inputting data and viewing predictions.
+* **Real-time Inference:** Rapid predictions powered by optimized machine learning models deployed on Render.
 
 ## 🛠️ Tech Stack
+* **Programming Language:** Python
+* **Machine Learning:** Scikit-Learn, Pandas, NumPy
+* **Web Framework:** Flask / FastAPI *(Adjust if you used a different framework)*
+* **Frontend:** HTML, CSS, JavaScript
+* **Deployment:** Render
 
-### 👨‍💻 Backend
+## 💻 Local Installation & Setup
 
-* Python 3.x
-* Flask
+To run this project locally on your machine, follow these steps:
 
-### 📊 Data Science
-
-* pandas
-* numpy
-* scikit-learn
-
-### 📈 Visualization
-
-* matplotlib
-* seaborn
-
-### 🎨 Frontend
-
-* HTML
-* Tailwind CSS
-
-### ☁️ Deployment
-
-* Render
-
----
-
-## 📁 Project Structure
-
-```
-.
-├── app.py                 # Flask app
-├── requirements.txt
-├── artifacts/             # Model & encoders
-├── data/
-│   └── processed_data.csv
-├── src/
-│   ├── predict.py
-│   ├── preprocess.py
-│   └── train.py
-├── templates/
-│   └── index.html
-├── outputs/               # EDA graphs
-├── README.md
-```
-
----
-
-## 📊 Exploratory Data Analysis (EDA)
-
-### 📈 Processing Time Distribution
-
-![Distribution](outputs/processing_time_dist.png)
-
-### 🌍 Processing Time by Country
-
-![Country](outputs/country_boxplot.png)
-
-### 🏢 Processing Office Trends
-
-![Office](outputs/office_barplot.png)
-
-### ❄️ Seasonal Trends
-
-![Season](outputs/season_barplot.png)
-
-### 🔥 Correlation Heatmap
-
-![Heatmap](outputs/correlation_heatmap.png)
-
----
-
-## 🧠 Machine Learning Model
-
-We trained multiple regression models:
-
-| Model             | MAE  | RMSE  | R²   |
-| ----------------- | ---- | ----- | ---- |
-| Linear Regression | 7.47 | 12.07 | 0.52 |
-| Random Forest     | 8.14 | 12.73 | 0.46 |
-| Gradient Boosting | 7.56 | 12.13 | 0.51 |
-
-👉 **Best Model:** Linear Regression
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/rohanreddy-12/AI-Visa-Prediction-Processing-Time.git](https://github.com/rohanreddy-12/AI-Visa-Prediction-Processing-Time.git)
+   cd AI-Visa-Prediction-Processing-Time
 
 
 
-
-## 🚀 Deployment (Render)
-
-1. Push code to GitHub
-2. Go to Render
-3. Create Web Service
-4. Use:
-
-```bash
-Build Command: pip install -r requirements.txt
-Start Command: gunicorn app:app
-```
-
----
-
-## ⚠️ Challenges Faced
-
-* Handling missing inputs (month validation)
-* Fixing dataset column mismatches
-* Debugging deployment issues (404, routing)
-* Managing unseen categorical values in prediction
-
----
-
-## 🧠 Future Improvements
-
-* 🔥 Use real-time visa datasets
-* 📊 Add interactive charts (Plotly)
-* 🤖 Improve model accuracy (XGBoost)
-* 🌐 Add user authentication
-* 📱 Make mobile-friendly UI
-
----
-
-## 📜 License
-
-MIT License
-
----
-
-## 👨‍💻 Author
-
-**Rohan Reddy**
-
+   📦 AI-Visa-Prediction-Processing-Time
+ ┣ 📂 static             # CSS, JS, and image files
+ ┣ 📂 templates          # HTML templates for the web interface
+ ┣ 📂 models             # Saved machine learning models (.pkl files)
+ ┣ 📜 app.py             # Main application script
+ ┣ 📜 requirements.txt   # Python dependencies
+ ┗ 📜 README.md          # Project documentation

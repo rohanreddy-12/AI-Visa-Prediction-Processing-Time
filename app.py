@@ -5,6 +5,7 @@ import seaborn as sns
 import io
 import base64
 import json
+import os
 
 from src.predict import predict
 
@@ -55,18 +56,16 @@ def generate_plots(df):
 
 
 # -------------------------------
-# Routes
+# SINGLE ROUTE (GET + POST)
 # -------------------------------
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return render_template(
-        "index.html",
-        metrics=json.dumps(metrics, indent=2)
-    )
 
-
-@app.route("/predict", methods=["POST"])
-def get_prediction():
+    if request.method == "GET":
+        return render_template(
+            "index.html",
+            metrics=json.dumps(metrics, indent=2)
+        )
 
     try:
         # Get inputs
@@ -130,7 +129,8 @@ def get_prediction():
         )
 
 
-import os
-
+# -------------------------------
+# RUN (RENDER COMPATIBLE)
+# -------------------------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))

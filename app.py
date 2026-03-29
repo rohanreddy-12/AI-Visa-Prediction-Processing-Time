@@ -1,0 +1,136 @@
+from flask import Flask, render_template, request
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import io
+import base64
+import json
+
+from src.predict import predict
+
+app = Flask(__name__)
+
+# Load metrics
+with open("artifacts/training_report.json") as f:
+    metrics = json.load(f)
+
+
+# -------------------------------
+# Generate dynamic plots
+# -------------------------------
+def generate_plots(df):
+    plots = {}
+
+    # Histogram
+    plt.figure()
+    sns.histplot(df["processing_time"], kde=True)
+    plt.title("Processing Time Distribution")
+    buf = io.BytesIO()
+    plt.savefig(buf, format="png")
+    buf.seek(0)
+    plots["hist"] = base64.b64encode(buf.read()).decode("utf-8")
+    plt.close()
+
+    # Visa Type
+    plt.figure()
+    sns.boxplot(x="visa_type", y="processing_time", data=df)
+    plt.title("Processing Time by Visa Type")
+    buf = io.BytesIO()
+    plt.savefig(buf, format="png")
+    buf.seek(0)
+    plots["visa"] = base64.b64encode(buf.read()).decode("utf-8")
+    plt.close()
+
+    # Country
+    plt.figure()
+    sns.boxplot(x="country", y="processing_time", data=df)
+    plt.title("Processing Time by Country")
+    buf = io.BytesIO()
+    plt.savefig(buf, format="png")
+    buf.seek(0)
+    plots["country"] = base64.b64encode(buf.read()).decode("utf-8")
+    plt.close()
+
+    return plots
+
+
+# -------------------------------
+# Routes
+# -------------------------------
+@app.route("/")
+def home():
+    return render_template(
+        "index.html",
+        metrics=json.dumps(metrics, indent=2)
+    )
+
+
+@app.route("/predict", methods=["POST"])
+def get_prediction():
+
+    try:
+        # Get inputs
+        country = request.form.get("country")
+        visa_type = request.form.get("visa_type")
+        office = request.form.get("office")
+        month = request.form.get("month")
+
+        # Validation
+        if not month:
+            raise ValueError("Month is required")
+
+        month = int(month)
+
+        if month < 1 or month > 12:
+            raise ValueError("Month must be between 1 and 12")
+
+        data = {
+            "country": country,
+            "visa_type": visa_type,
+            "processing_office": office,
+            "month": month
+        }
+
+        # Prediction
+        result = predict(data)
+
+        # Load dataset
+        df = pd.read_csv("data/processed_data.csv")
+
+        # Filter
+        filtered_df = df[
+            (df["country"] == country) &
+            (df["visa_type"] == visa_type)
+        ]
+
+        if filtered_df.empty:
+            filtered_df = df
+
+        plots = generate_plots(filtered_df)
+
+        return render_template(
+            "index.html",
+            prediction=round(result, 2),
+            plots=plots,
+            metrics=json.dumps(metrics, indent=2)
+        )
+
+    except ValueError as e:
+        return render_template(
+            "index.html",
+            error=str(e),
+            metrics=json.dumps(metrics, indent=2)
+        )
+
+    except Exception:
+        return render_template(
+            "index.html",
+            error="Something went wrong. Please try again.",
+            metrics=json.dumps(metrics, indent=2)
+        )
+
+
+import os
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

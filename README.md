@@ -41,3 +41,7 @@ To run this project locally on your machine, follow these steps:
  ┣ 📜 app.py             # Main application script
  ┣ 📜 requirements.txt   # Python dependencies
  ┗ 📜 README.md          # Project documentation
+
+
+Demo Video:
+https://drive.google.com/file/d/1p4hH_vcX3ZeKZgFjOA-cthwVXEycGRfr/view?usp=sharing

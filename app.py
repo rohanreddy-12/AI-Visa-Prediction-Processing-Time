@@ -11,9 +11,12 @@ from src.predict import predict
 
 app = Flask(__name__)
 
-# Load metrics
-with open("artifacts/training_report.json") as f:
-    metrics = json.load(f)
+# Load metrics safely
+try:
+    with open("artifacts/training_report.json") as f:
+        metrics = json.load(f)
+except:
+    metrics = {"error": "metrics not found"}
 
 
 # -------------------------------
@@ -22,41 +25,45 @@ with open("artifacts/training_report.json") as f:
 def generate_plots(df):
     plots = {}
 
-    # Histogram
-    plt.figure()
-    sns.histplot(df["processing_time"], kde=True)
-    plt.title("Processing Time Distribution")
-    buf = io.BytesIO()
-    plt.savefig(buf, format="png")
-    buf.seek(0)
-    plots["hist"] = base64.b64encode(buf.read()).decode("utf-8")
-    plt.close()
+    try:
+        # Histogram
+        plt.figure()
+        sns.histplot(df["processing_time_days"], kde=True)
+        plt.title("Processing Time Distribution")
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png")
+        buf.seek(0)
+        plots["hist"] = base64.b64encode(buf.read()).decode("utf-8")
+        plt.close()
 
-    # Visa Type
-    plt.figure()
-    sns.boxplot(x="visa_type", y="processing_time", data=df)
-    plt.title("Processing Time by Visa Type")
-    buf = io.BytesIO()
-    plt.savefig(buf, format="png")
-    buf.seek(0)
-    plots["visa"] = base64.b64encode(buf.read()).decode("utf-8")
-    plt.close()
+        # Visa Type
+        plt.figure()
+        sns.boxplot(x="visa_type", y="processing_time_days", data=df)
+        plt.title("Processing Time by Visa Type")
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png")
+        buf.seek(0)
+        plots["visa"] = base64.b64encode(buf.read()).decode("utf-8")
+        plt.close()
 
-    # Country
-    plt.figure()
-    sns.boxplot(x="country", y="processing_time", data=df)
-    plt.title("Processing Time by Country")
-    buf = io.BytesIO()
-    plt.savefig(buf, format="png")
-    buf.seek(0)
-    plots["country"] = base64.b64encode(buf.read()).decode("utf-8")
-    plt.close()
+        # Country
+        plt.figure()
+        sns.boxplot(x="applicant_country", y="processing_time_days", data=df)
+        plt.title("Processing Time by Country")
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png")
+        buf.seek(0)
+        plots["country"] = base64.b64encode(buf.read()).decode("utf-8")
+        plt.close()
+
+    except Exception as e:
+        print("Plot Error:", e)
 
     return plots
 
 
 # -------------------------------
-# SINGLE ROUTE (GET + POST)
+# SINGLE ROUTE
 # -------------------------------
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -68,7 +75,7 @@ def home():
         )
 
     try:
-        # Get inputs
+        # Inputs
         country = request.form.get("country")
         visa_type = request.form.get("visa_type")
         office = request.form.get("office")
@@ -96,9 +103,9 @@ def home():
         # Load dataset
         df = pd.read_csv("data/processed_data.csv")
 
-        # Filter
+        # Safe filtering
         filtered_df = df[
-            (df["country"] == country) &
+            (df["applicant_country"] == country) &
             (df["visa_type"] == visa_type)
         ]
 
@@ -121,16 +128,17 @@ def home():
             metrics=json.dumps(metrics, indent=2)
         )
 
-    except Exception:
+    except Exception as e:
+        print("ERROR:", e)
         return render_template(
             "index.html",
-            error="Something went wrong. Please try again.",
+            error=str(e),  # 👈 show real error
             metrics=json.dumps(metrics, indent=2)
         )
 
 
 # -------------------------------
-# RUN (RENDER COMPATIBLE)
+# RUN
 # -------------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))

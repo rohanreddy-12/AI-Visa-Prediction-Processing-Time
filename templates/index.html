@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visa Estimator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0b0f19] text-white">
+
+<div class="max-w-7xl mx-auto px-6 py-8">
+
+    <h1 class="text-4xl font-bold mb-4">
+        AI Visa Processing Time Estimator
+    </h1>
+
+    <!-- ERROR MESSAGE -->
+    {% if error %}
+    <div class="mb-4 bg-red-500/20 border border-red-500 p-4 rounded">
+        ⚠️ {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- FORM -->
+    <form action="/predict" method="POST"
+          class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#111827] p-6 rounded-xl">
+
+        <div>
+            <label>Country</label>
+            <select name="country" class="w-full p-2 bg-gray-800 rounded">
+                <option>India</option>
+                <option>USA</option>
+                <option>Canada</option>
+                <option>UK</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Processing Office</label>
+            <select name="office" class="w-full p-2 bg-gray-800 rounded">
+                <option>Delhi</option>
+                <option>Mumbai</option>
+                <option>Chennai</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Visa Type</label>
+            <select name="visa_type" class="w-full p-2 bg-gray-800 rounded">
+                <option>Student</option>
+                <option>Work</option>
+                <option>Tourist</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Month</label>
+            <input type="number" name="month" min="1" max="12"
+                   class="w-full p-2 bg-gray-800 rounded" required>
+        </div>
+
+        <button class="bg-blue-600 p-2 rounded col-span-2 hover:bg-blue-700">
+            Predict
+        </button>
+    </form>
+
+    <!-- RESULT -->
+    {% if prediction %}
+    <div class="mt-6 bg-[#111827] p-4 rounded">
+        <h2 class="text-gray-400">Estimated Processing Time</h2>
+        <h1 class="text-3xl font-bold">{{ prediction }} days</h1>
+    </div>
+    {% endif %}
+
+    <!-- DYNAMIC GRAPHS -->
+    {% if plots %}
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <img src="data:image/png;base64,{{ plots.hist }}">
+        <img src="data:image/png;base64,{{ plots.visa }}">
+        <img src="data:image/png;base64,{{ plots.country }}">
+    </div>
+    {% endif %}
+
+    <!-- METRICS -->
+    <div class="mt-8 bg-[#111827] p-4 rounded">
+        <h2 class="text-gray-400">Model Quality</h2>
+        <pre class="text-green-400 text-sm">
+{{ metrics }}
+        </pre>
+    </div>
+
+</div>
+
+</body>
+</html>

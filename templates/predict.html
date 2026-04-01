@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Visa Estimator | Predict</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #070f1e; --glass-bg: rgba(15, 23, 42, 0.6); --glass-border: rgba(14, 165, 233, 0.15); --text-main: #f8fafc; --text-muted: #94a3b8; --brand-main: #0ea5e9; --brand-light: #38bdf8; --brand-gradient: linear-gradient(135deg, #38bdf8, #0284c7); --input-bg: rgba(7, 15, 30, 0.8); }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; position: relative; overflow-x: hidden; display: flex; flex-direction: column; }
+        
+        @keyframes float1 { 0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; } 50% { transform: translate(5%, 5%) scale(1.1); opacity: 0.8; } }
+        @keyframes float2 { 0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; } 50% { transform: translate(-5%, -5%) scale(1.05); opacity: 0.7; } }
+        .ambient-glow-1 { position: fixed; top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(0,0,0,0) 70%); z-index: -1; border-radius: 50%; animation: float1 15s ease-in-out infinite; pointer-events: none; }
+        .ambient-glow-2 { position: fixed; bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(2, 132, 199, 0.1) 0%, rgba(0,0,0,0) 70%); z-index: -1; border-radius: 50%; animation: float2 18s ease-in-out infinite; pointer-events: none; }
+        
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid var(--glass-border); background: rgba(7, 15, 30, 0.7); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 50; }
+        .logo { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 8px; color: white; text-decoration: none; }
+        .logo i { color: var(--brand-light); font-size: 1.5rem; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--brand-light); }
+
+        .container { max-width: 800px; margin: 40px auto 60px; padding: 0 20px; width: 100%; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+        .glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 40px; backdrop-filter: blur(20px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); transform-style: preserve-3d; }
+
+        .header-banner { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; transform: translateZ(20px); flex-wrap: wrap; gap: 15px; }
+        .info-banner { display: flex; gap: 15px; align-items: center; background: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.2); padding: 12px 20px; border-radius: 16px; flex-grow: 1; }
+        .info-banner i { font-size: 1.8rem; color: var(--brand-light); }
+        .info-banner h3 { margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; }
+        .info-banner p { margin: 0; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+        
+        .magic-btn { background: rgba(14, 165, 233, 0.1); border: 1px solid var(--brand-main); color: var(--brand-light); padding: 10px 16px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; transition: 0.3s; font-size: 0.85rem; }
+        .magic-btn:hover { background: var(--brand-gradient); color: white; border-color: transparent; }
+
+        /* NEW: Input Guide Box */
+        .input-guide { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 15px; margin-bottom: 25px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; border: 1px solid rgba(255,255,255,0.05); }
+        .input-guide strong { color: var(--text-main); }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; transform: translateZ(10px); }
+        .full-width { grid-column: span 2; }
+        .input-group { position: relative; background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 8px 16px 4px; transition: 0.3s; }
+        .input-group:focus-within { border-color: var(--brand-main); box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2); }
+        .input-group label { display: flex; align-items: center; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; font-weight: 600; }
+        .input-group select, .input-group input { background: transparent; border: none; color: white; padding: 4px 0 8px; width: 100%; font-size: 0.95rem; outline: none; appearance: none; font-family: inherit; }
+        .input-group select option { color: black; background: white; }
+        .select-group::after { content: "▼"; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.7rem; pointer-events: none; }
+
+        button[type="submit"] { width: 100%; padding: 16px; margin-top: 24px; border: none; border-radius: 12px; background: var(--brand-gradient); color: white; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2); display: flex; justify-content: center; align-items: center; gap: 8px; }
+        button[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(14, 165, 233, 0.35); }
+
+        .skeleton-wrapper { display: none; margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--glass-border); }
+        .skeleton { background: linear-gradient(90deg, rgba(15,23,42,0.6) 25%, rgba(30,41,59,0.8) 50%, rgba(15,23,42,0.6) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; margin-bottom: 15px; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        .result-area { display: none; margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--glass-border); animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .result-header { display: flex; justify-content: space-around; align-items: center; margin-bottom: 30px; }
+        .huge-text { font-size: 4rem; font-weight: 700; margin: 0; color: var(--brand-light); display: inline-flex; align-items: baseline; }
+        .huge-text span { font-size: 1.5rem; color: var(--text-muted); margin-left: 8px; font-weight: 500; }
+        
+        .circular-chart { display: block; margin: 0 auto; max-width: 90px; max-height: 90px; }
+        .circle-bg { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 3.8; }
+        .circle { fill: none; stroke: var(--brand-light); stroke-width: 3.8; stroke-linecap: round; transition: stroke-dasharray 1.5s ease-out; }
+        .percentage { fill: white; font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 600; text-anchor: middle; }
+        
+        .insight-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px; margin: 20px 0; display: flex; gap: 12px; align-items: flex-start; }
+        .insight-box i { color: #10b981; font-size: 1.5rem; margin-top: 2px; }
+        .insight-content h4 { margin: 0 0 4px 0; color: #10b981; font-size: 0.95rem; }
+        .insight-content p { margin: 0; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        .feature-box { background: rgba(0,0,0,0.2); border-radius: 16px; padding: 24px; text-align: left; margin-top: 20px; }
+        .f-header { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px; }
+        .f-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; }
+        .f-bar-fill { height: 100%; background: var(--brand-gradient); border-radius: 4px; transition: width 1s ease-out; }
+
+        .action-buttons { display: flex; gap: 15px; margin-top: 20px; justify-content: center; }
+        .action-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-muted); padding: 10px 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; transition: 0.2s; }
+        .action-btn:hover { background: rgba(14, 165, 233, 0.1); color: var(--brand-light); }
+
+        .api-trace { display: none; text-align: left; margin-top: 15px; background: #050a15; border: 1px solid var(--glass-border); border-radius: 12px; padding: 16px; overflow-x: auto; }
+        .api-trace.open { display: block; animation: fadeIn 0.3s; }
+        .api-trace pre { margin: 0; font-family: monospace; font-size: 0.75rem; color: #38bdf8; }
+
+        .toast { position: fixed; bottom: 30px; right: 30px; background: rgba(15, 23, 42, 0.9); border-left: 4px solid var(--brand-main); color: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px); z-index: 1000; transform: translateX(150%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
+        .toast.show { transform: translateX(0); }
+        .toast i { font-size: 1.2rem; color: var(--brand-light); }
+
+        .footer { background: rgba(7, 15, 30, 0.9); border-top: 1px solid var(--glass-border); padding: 40px 20px; text-align: center; margin-top: auto; }
+        .footer p { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
+        
+        @media print { body { background: white; color: black; } .nav, form, .magic-btn, .action-buttons, .input-guide, .footer { display: none !important; } .glass-card { box-shadow: none; border: 1px solid #ccc; background: transparent; } .huge-text { color: black; } }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <nav class="nav">
+        <a href="/" class="logo"><i class="ph-fill ph-planet"></i> AI Visa</a>
+        <div class="nav-links"><a href="/">Home</a><a href="/predict-page" class="active">Predict</a><a href="/about">About</a></div>
+    </nav>
+
+    <div class="container" id="printableArea">
+        <div class="glass-card" data-tilt data-tilt-max="1" data-tilt-speed="1000" data-tilt-glare="true" data-tilt-max-glare="0.05">
+            
+            <div class="header-banner">
+                <div class="info-banner">
+                    <i class="ph-fill ph-cpu"></i>
+                    <div><h3>Model Engine Ready</h3><p>Trained on H-1B dataset records.</p></div>
+                </div>
+                <button type="button" class="magic-btn" onclick="magicFill()">
+                    <i class="ph-fill ph-magic-wand"></i> Auto-Fill Example
+                </button>
+            </div>
+
+            <div class="input-guide">
+                <i class="ph-bold ph-info" style="color: var(--brand-light); margin-right: 5px;"></i> 
+                <strong>Prediction Guide:</strong> Ensure your <em>Prevailing Wage</em> matches the minimum requirement for your selected <em>Wage Level</em>. Mismatched data may result in skewed algorithmic predictions.
+            </div>
+
+            <form id="form">
+                <div class="form-grid">
+                    <div class="input-group select-group">
+                        <label>Employer State</label>
+                        <select id="emp_state"></select>
+                    </div>
+                    <div class="input-group select-group">
+                        <label>Work State</label>
+                        <select id="work_state"></select>
+                    </div>
+
+                    <div class="input-group select-group full-width">
+                        <label>Job Title</label>
+                        <select id="job_title">
+                            <option>SOFTWARE ENGINEER</option>
+                            <option>DATA SCIENTIST</option>
+                            <option>SYSTEM ANALYST</option>
+                            <option>MACHINE LEARNING ENGINEER</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group select-group">
+                        <label>Occupational Category</label>
+                        <select id="soc_name">
+                            <option>Software Developers, Applications</option>
+                            <option>Computer Systems Analysts</option>
+                            <option>Database Administrators</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Prevailing Wage ($)</label>
+                        <input id="prevailing_wage" type="number" value="100000" required>
+                    </div>
+
+                    <div class="input-group select-group">
+                        <label>Wage Level</label>
+                        <select id="pw_level">
+                            <option>Level I</option>
+                            <option selected>Level II</option>
+                            <option>Level III</option>
+                            <option>Level IV</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group select-group">
+                        <label>Full Time Position</label>
+                        <select id="full_time_position"><option value="Y">Yes</option><option value="N">No</option></select>
+                    </div>
+
+                    <div class="input-group select-group">
+                        <label>H1B Dependent</label>
+                        <select id="emp_h1b_dependent"><option value="N">No</option><option value="Y">Yes</option></select>
+                    </div>
+
+                    <div class="input-group select-group">
+                        <label>Case Year</label>
+                        <select id="case_year"><option>2023</option><option selected>2024</option></select>
+                    </div>
+                </div>
+                <button type="submit" id="submitBtn">Execute Prediction <i class="ph-bold ph-arrow-right"></i></button>
+            </form>
+
+            <div class="skeleton-wrapper" id="skeletonLoader">
+                <div style="display: flex; justify-content: space-around; margin-bottom: 20px;">
+                    <div><div class="skeleton" style="height: 15px; width: 80px; margin: 0 auto 10px;"></div><div class="skeleton" style="height: 50px; width: 120px;"></div></div>
+                    <div class="skeleton" style="height: 80px; width: 80px; border-radius: 50%;"></div>
+                </div>
+                <div class="skeleton" style="height: 150px; width: 100%;"></div>
+            </div>
+
+            <div class="result-area" id="resultBox">
+                <div class="result-header">
+                    <div style="text-align: center;">
+                        <p style="color: var(--brand-light); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 5px 0; font-size: 0.8rem;">Estimated Wait</p>
+                        <h2 class="huge-text"><span id="daysCount">--</span> <span>Days</span></h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin: 5px 0 0 0;" id="rangeText">Range: --</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" id="confCircle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <text x="18" y="20.35" class="percentage" id="confText">85%</text>
+                        </svg>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin: 8px 0 0 0;">Confidence</p>
+                    </div>
+                </div>
+
+                <div class="insight-box" id="insightBox">
+                    <i class="ph-fill ph-lightbulb"></i>
+                    <div class="insight-content">
+                        <h4>AI Smart Insight</h4>
+                        <p id="insightText">Analyzing your data profile...</p>
+                    </div>
+                </div>
+
+                <canvas id="chart" style="margin-top: 20px; max-height: 120px;"></canvas>
+
+                <div class="feature-box">
+                    <h4 style="color: white; margin-bottom: 20px; font-size: 0.9rem;"><i class="ph-fill ph-chart-bar" style="color: var(--brand-light);"></i> Key Factors Influencing Prediction</h4>
+                    <div id="featureList"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="window.print()"><i class="ph-bold ph-download-simple"></i> Export PDF Report</button>
+                    <button class="action-btn" onclick="toggleApiTrace()"><i class="ph-bold ph-terminal-window"></i> Toggle API Trace</button>
+                </div>
+
+                <div class="api-trace" id="apiTraceBox">
+                    <pre id="reqTrace">{}</pre>
+                    <pre id="resTrace" style="margin-top:10px; border-top:1px solid #334155; padding-top:10px;">{}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 AI Visa Estimator. Built for Portfolio Demonstration.</p>
+    </footer>
+
+    <div id="toast" class="toast"><i class="ph-fill ph-check-circle" id="toastIcon"></i><span id="toastMsg">Notification</span></div>
+
+    <script>
+        const states = {"California":"CA", "Texas":"TX", "New York":"NY", "Washington":"WA", "Alabama":"AL", "Florida":"FL", "Illinois":"IL"};
+        const empSelect = document.getElementById('emp_state');
+        const workSelect = document.getElementById('work_state');
+        for(let s in states){
+            empSelect.innerHTML += `<option value="${states[s]}" ${s==='California'?'selected':''}>${s}</option>`;
+            workSelect.innerHTML += `<option value="${states[s]}" ${s==='California'?'selected':''}>${s}</option>`;
+        }
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toastMsg").innerText = msg;
+            toast.style.borderLeftColor = isError ? "#ef4444" : "var(--brand-main)";
+            document.getElementById("toastIcon").className = isError ? "ph-fill ph-warning-circle" : "ph-fill ph-check-circle";
+            document.getElementById("toastIcon").style.color = isError ? "#ef4444" : "var(--brand-light)";
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3500);
+        }
+
+        function magicFill() {
+            const setRandomOption = (elementId) => {
+                const selectElement = document.getElementById(elementId);
+                const options = selectElement.options;
+                const randomIndex = Math.floor(Math.random() * options.length);
+                selectElement.selectedIndex = randomIndex;
+            };
+
+            setRandomOption('emp_state');
+            setRandomOption('work_state');
+            setRandomOption('job_title');
+            setRandomOption('soc_name');
+            setRandomOption('pw_level');
+            setRandomOption('full_time_position');
+            setRandomOption('emp_h1b_dependent');
+            setRandomOption('case_year');
+
+            const randomWage = Math.floor(Math.random() * (185 - 65 + 1) + 65) * 1000;
+            document.getElementById('prevailing_wage').value = randomWage;
+
+            showToast("Random profile generated!");
+            setTimeout(() => document.getElementById('submitBtn').click(), 400);
+        }
+
+        function toggleApiTrace() { document.getElementById('apiTraceBox').classList.toggle('open'); }
+
+        function generateInsight(wage, level, dependent) {
+            let insight = "Your profile matches standard processing timelines.";
+            if (level === "Level I" || wage < 80000) insight = "Pro-Tip: Level I wages or wages under $80k generally experience slightly longer scrutiny. Upgrading to Level II historically speeds up processing by ~10%.";
+            else if (level === "Level III" || level === "Level IV") insight = "Excellent profile. Level III/IV applications demonstrate specialized skills and are statistically prioritized in the queue.";
+            if (dependent === "Y") insight += " Note: Filing with an H-1B dependent employer adds minor administrative delays.";
+            return insight;
+        }
+
+        let chart;
+        function drawChart(p, l, u){
+            const ctx = document.getElementById("chart").getContext("2d");
+            if(chart) chart.destroy();
+            chart = new Chart(ctx,{ type:'bar', data:{ labels:['Days'], datasets:[ { label:'Min', data:[l], backgroundColor:'transparent' }, { label:'Variance', data:[u-l], backgroundColor:'rgba(14, 165, 233, 0.15)', borderRadius:4 }, { label:'Prediction', data:[p-l], backgroundColor:'#0ea5e9', borderRadius:4 } ] }, options:{ indexAxis: 'y', maintainAspectRatio: false, scales:{ x:{stacked:true, grid:{display:false}}, y:{stacked:true, grid:{display:false}} }, plugins:{ legend:{ display: false } } } });
+        }
+
+        document.getElementById('form').addEventListener("submit", async e => {
+            e.preventDefault();
+            
+            document.getElementById('resultBox').style.display = "none";
+            document.getElementById('skeletonLoader').style.display = "block";
+            document.getElementById('daysCount').innerText = "--";
+
+            const payload = {
+                emp_state: empSelect.value, work_state: workSelect.value, job_title: document.getElementById('job_title').value,
+                soc_name: document.getElementById('soc_name').value, full_time_position: document.getElementById('full_time_position').value,
+                prevailing_wage: document.getElementById('prevailing_wage').value, pw_level: document.getElementById('pw_level').value,
+                emp_h1b_dependent: document.getElementById('emp_h1b_dependent').value, case_year: document.getElementById('case_year').value
+            };
+
+            document.getElementById('reqTrace').innerText = "REQ: " + JSON.stringify(payload, null, 2);
+
+            try {
+                const res = await fetch("/api/predict", { 
+                    method:"POST", 
+                    headers:{"Content-Type":"application/json"}, 
+                    body:JSON.stringify(payload) 
+                });
+                
+                if (!res.ok) throw new Error("Server Error");
+                
+                const r = await res.json();
+                document.getElementById('resTrace').innerText = "RES: " + JSON.stringify(r, null, 2);
+                
+                setTimeout(() => {
+                    document.getElementById('skeletonLoader').style.display = "none";
+                    
+                    if(r.status === "success" && r.predicted_days !== undefined) {
+                        const resBox = document.getElementById('resultBox');
+                        resBox.style.display = "block";
+                        
+                        setTimeout(() => resBox.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+
+                        const finalDays = parseInt(r.predicted_days);
+                        document.getElementById('daysCount').innerText = finalDays;
+                        
+                        const rangeStr = r.range || `${finalDays - 15} - ${finalDays + 15}`;
+                        document.getElementById('rangeText').innerText = `Range: ${rangeStr} Days`;
+                        
+                        document.getElementById('insightText').innerText = generateInsight(payload.prevailing_wage, payload.pw_level, payload.emp_h1b_dependent);
+
+                        const confNum = parseInt(r.confidence_interval) || 85; 
+                        document.getElementById('confCircle').style.strokeDasharray = `${confNum}, 100`;
+                        document.getElementById('confText').innerText = `${confNum}%`;
+
+                        const parts = rangeStr.split("-").map(n => parseInt(n.trim()));
+                        drawChart(finalDays, parts[0] || finalDays - 15, parts[1] || finalDays + 15);
+
+                        const featureList = document.getElementById('featureList');
+                        featureList.innerHTML = "";
+                        if(r.top_features && r.top_features.length > 0) {
+                            const max = Math.max(...r.top_features.map(f => f.importance));
+                            r.top_features.forEach(f => {
+                                const perc = (f.importance / max) * 100;
+                                const name = f.feature.replace(/_/g, ' ').toUpperCase();
+                                featureList.innerHTML += `
+                                    <div style="margin-bottom:12px;">
+                                        <div class="f-header"><span>${name}</span><span style="color: var(--brand-light);">${(f.importance*100).toFixed(1)}%</span></div>
+                                        <div class="f-bar-bg"><div class="f-bar-fill" style="width: 0%;" data-target="${perc}%"></div></div>
+                                    </div>`;
+                            });
+                            setTimeout(() => document.querySelectorAll('.f-bar-fill').forEach(b => b.style.width = b.getAttribute('data-target')), 150);
+                        }
+                        showToast("Prediction pipeline completed.");
+                    } else {
+                        showToast("Prediction failed. Please check inputs.", true);
+                    }
+                }, 800);
+            } catch (err) {
+                document.getElementById('skeletonLoader').style.display = "none";
+                showToast("API Error: Verify your Flask backend is running.", true);
+            }
+        });
+    </script>
+</body>
+</html>

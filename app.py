@@ -11,9 +11,7 @@ app = Flask(__name__)
 # ==========================================
 MODEL_PATH = "visa_processing_model.pkl"
 
-# ⚠️ IMPORTANT: Replace the string below with your actual Google Drive File ID!
-# If your link is: https://drive.google.com/file/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/view
-# Your ID is: 1aBcDeFgHiJkLmNoPqRsTuVwXyZ
+
 FILE_ID = "1LvAKiyLp_Fbkwu3eiR4tbCUQ_0X3p41Y" 
 
 if not os.path.exists(MODEL_PATH):

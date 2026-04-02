@@ -1,23 +1,4 @@
-"""
-Visa Processing Time Estimator — Flask Backend
-Uses XGBoost model with proper LabelEncoder encoding from training.
 
-FIXES vs original:
-  1. le_encode() now falls back to the UNKNOWN class index (not index 0)
-     for all high-cardinality fields.  Using index 0 put the model into
-     out-of-distribution territory and produced negative / nonsense predictions.
-  2. Optional high-cardinality fields (emp_city, emp_zip, job_title, soc_code,
-     soc_name, work_city) are only used if their encoded value keeps the raw
-     prediction ≥ 5 days.  If a specific value hurts the prediction it falls
-     back to the UNKNOWN/median index.
-  3. When the final raw prediction is still < 5 (model uncertainty), the
-     calibrated fallback_predict() heuristic is used instead of hard-clamping
-     to 5, which was masking bad predictions.
-  4. work_state defaults to emp_state when not explicitly supplied, matching
-     the common case where employer and worksite state are the same.
-  5. soc_name is no longer .upper()-ified because the training data contains
-     SOC numeric codes (e.g. '15-1132'), not description strings.
-"""
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS

@@ -5,19 +5,31 @@ Experience the live application here: **[Visa Prediction App](https://ai-visa-pr
 
 -----
 
-\<div align="center"\>
+<div align="center">
 
-\<h1\>🛂 AI-Enabled Visa Status Prediction<br>& Processing Time Estimator\</h1\>
+<h1>🛂 AI-Enabled Visa Status Prediction<br/>& Processing Time Estimator</h1>
 
-\<p\>
-\<img src="[https://img.shields.io/badge/Python-3.11.9-blue?style=for-the-badge\&logo=python\&logoColor=white](https://img.shields.io/badge/Python-3.11.9-blue?style=for-the-badge&logo=python&logoColor=white)"/\>
-\<img src="[https://img.shields.io/badge/XGBoost-2.0.3-orange?style=for-the-badge](https://img.shields.io/badge/XGBoost-2.0.3-orange?style=for-the-badge)"/\>
-\<img src="[https://img.shields.io/badge/Flask-3.0.0-black?style=for-the-badge\&logo=flask](https://img.shields.io/badge/Flask-3.0.0-black?style=for-the-badge&logo=flask)"/\>
-\<img src="[https://img.shields.io/badge/Deployed-Render-purple?style=for-the-badge\&logo=render](https://img.shields.io/badge/Deployed-Render-purple?style=for-the-badge&logo=render)"/\>
-\<img src="[https://img.shields.io/badge/License-MIT-green?style=for-the-badge](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)"/\>
-\</p\>
+<p>
+  <img src="https://img.shields.io/badge/Python-3.11.9-blue?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/XGBoost-2.0.3-orange?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Flask-3.0.0-black?style=for-the-badge&logo=flask" />
+  <img src="https://img.shields.io/badge/Deployed-Render-purple?style=for-the-badge&logo=render" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
+</p>
 
-\<p\>\<b\>A full-stack AI web application that predicts H-1B visa processing times using XGBoost trained on 3.2M+ historical records — built as part of the Infosys Springboard Virtual Internship.\</b\>\</p\>
+<p><b>A full-stack AI web application that predicts H-1B visa processing times using XGBoost trained on 3.2M+ historical records — built as part of the Infosys Springboard Virtual Internship.</b></p>
+
+<p>
+  <a href="https://ai-visa-prediction-processing-time-rohan.onrender.com">
+    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-Open%20App-brightgreen?style=for-the-badge" alt="Live Demo" />
+  </a>
+  &nbsp;
+  <a href="https://drive.google.com/file/d/1p4hH_vcX3ZeKZgFjOA-cthwVXEycGRfr/view?usp=sharing">
+    <img src="https://img.shields.io/badge/🎬%20Demo%20Video-Watch-red?style=for-the-badge&logo=google-drive" alt="Demo Video" />
+  </a>
+</p>
+
+</div>
 
 \<p\>
 \<a href="[https://ai-visa-prediction-processing-time-rohan.onrender.com](https://ai-visa-prediction-processing-time-rohan.onrender.com)"\>

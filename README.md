@@ -13,7 +13,7 @@ AI-Visa-Prediction-Processing-Time is an innovative Python-based application tha
 
 Predict H-1B visa processing time using Machine Learning (3.2M+ records)
 
-🚀 [Live App](https://ai-visa-prediction-processing-time-rohan.onrender.com/)
+🚀 [Live App](https://ai-visa-prediction-processing-time-rohan-p0uq.onrender.com)
 🎬 [Demo Video](https://drive.google.com/file/d/14674a_8mZg4HyCXiDaZHxZrbjKV-CdKz/view?usp=drive_link)
 
 

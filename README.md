@@ -1,7 +1,11 @@
-🛂 AI-Powered Visa Processing Time Estimator
+AI-Visa-Prediction-Processing-Time
+Python
 
-📸 Screenshots
+📝 Description
+AI-Visa-Prediction-Processing-Time is an innovative Python-based application that leverages artificial intelligence to predict visa processing durations. By analyzing historical data and various application factors, this tool provides prospective travelers and immigration professionals with data-driven estimates, reducing uncertainty and streamlining international travel planning.
 
+🛠️ Tech Stack
+🐍 Python
 
 
 

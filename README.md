@@ -19,12 +19,19 @@ Predict H-1B visa processing time using Machine Learning (3.2M+ records)
 📦 Key Dependencies
 
 xgboost: 2.0.3
+
 flask: 3.0.0
+
 flask-cors: 4.0.0
+
 numpy: 1.26.2
+
 scikit-learn: 1.4.0
+
 gunicorn: 21.2.0
+
 pandas: 2.2.0
+
 
 
 

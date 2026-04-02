@@ -241,49 +241,9 @@ python Milestone2.py
 # Download the generated .pkl files into your repository root.
 ```
 
------
 
-📁 Project Structure
-.
-├── Documents
-│   ├── Rohan_Agile_doc.xls
-│   ├── Rohan_Defect_Tracker.xlsx
-│   └── Rohan_Unit_Test_Plan.xlsx
-├── MIT license.txt
-├── Milestone 3
-│   └── xgboost_fast_gpu_fixed.ipynb
-├── Milestone1
-│   └── Milestone1.py
-├── Milestone2-Outputs
-│   ├── Milestone2.py
-│   ├── eda10_feature_importance.png
-│   ├── eda1_processing_time_dist.png
-│   ├── eda2_case_status.png
-│   ├── eda2b_processing_by_status.png
-│   ├── eda3_wage_analysis.png
-│   ├── eda4_yearly_trends.png
-│   ├── eda4b_monthly_seasonal.png
-│   ├── eda5_top_employers.png
-│   ├── eda6_job_analysis.png
-│   ├── eda7_correlation_heatmap.png
-│   ├── eda8_fulltime_violin.png
-│   └── eda9_engineered_features.png
-├── Procfile
-├── app.py
-├── assets
-│   ├── api.png
-│   ├── cases.png
-│   ├── dashboard2.png
-│   ├── dashboard3.png
-│   ├── estimator.png
-│   ├── estimator2.png
-│   ├── prediction.png
-│   └── trends.png
-├── features (1).pkl
-├── index.html
-├── label_encoders (3).pkl
-├── requirements.txt
-└── xgboost_visa_model (1).pkl
+
+
 
 -----
 

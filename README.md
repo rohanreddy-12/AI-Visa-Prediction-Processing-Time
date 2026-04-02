@@ -15,10 +15,12 @@ Predict H-1B visa processing time using Machine Learning (3.2M+ records)
 
 🚀 [Live App](https://ai-visa-prediction-processing-time-rohan.onrender.com/)
 🎬 [Demo Video](https://drive.google.com/file/d/14674a_8mZg4HyCXiDaZHxZrbjKV-CdKz/view?usp=drive_link)
+📸 Screenshots
+[screenshot](./assets/estimator.png)
 
 
 
-*📦 Key Dependencies
+📦 Key Dependencies
 
 xgboost: 2.0.3
 

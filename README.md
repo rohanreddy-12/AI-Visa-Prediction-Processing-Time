@@ -1,30 +1,18 @@
+🛂 AI-Powered Visa Processing Time Estimator
+
+📸 Screenshots
 
 
-<div align="center">
 
-<h1>🛂 AI-Enabled Visa Status Prediction<br/>& Processing Time Estimator</h1>
 
-<p>
-  <img src="https://img.shields.io/badge/Python-3.11.9-blue?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/XGBoost-2.0.3-orange?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Flask-3.0.0-black?style=for-the-badge&logo=flask" />
-  <img src="https://img.shields.io/badge/Deployed-Render-purple?style=for-the-badge&logo=render" />
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
-</p>
 
-<p><b>A full-stack AI web application that predicts H-1B visa processing times using XGBoost trained on 3.2M+ historical records — built as part of the Infosys Springboard Virtual Internship.</b></p>
 
-<p>
-  <a href="https://ai-visa-prediction-processing-time-rohan.onrender.com">
-    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-Open%20App-brightgreen?style=for-the-badge" alt="Live Demo" />
-  </a>
-  &nbsp;
-  <a href="https://drive.google.com/file/d/1p4hH_vcX3ZeKZgFjOA-cthwVXEycGRfr/view?usp=sharing">
-    <img src="https://img.shields.io/badge/🎬%20Demo%20Video-Watch-red?style=for-the-badge&logo=google-drive" alt="Demo Video" />
-  </a>
-</p>
+Predict H-1B visa processing time using Machine Learning (3.2M+ records)
 
-</div>
+🚀 [Live App](https://ai-visa-prediction-processing-time-rohan.onrender.com/)
+🎬 [Demo Video](https://drive.google.com/file/d/14674a_8mZg4HyCXiDaZHxZrbjKV-CdKz/view?usp=drive_link)
+
+
 
 
 
@@ -32,19 +20,18 @@
 
 ## 📋 Table of Contents
 
-  * [Project Overview](https://www.google.com/search?q=%23-project-overview)
-  * [Architecture](https://www.google.com/search?q=%23%EF%B8%8F-system-architecture)
-  * [Milestones](https://www.google.com/search?q=%23-milestones--timeline)
-      * [Data Collection & Preprocessing](https://www.google.com/search?q=%23milestone-1--data-collection--preprocessing-weeks-12)
-      * [EDA & Feature Engineering](https://www.google.com/search?q=%23milestone-2--eda--feature-engineering-weeks-34)
-      * [Predictive Modeling](https://www.google.com/search?q=%23milestone-3--predictive-modeling-weeks-56)
-      * [Web App & Deployment](https://www.google.com/search?q=%23milestone-4--web-app--deployment-weeks-78)
-  * [Application Features](https://www.google.com/search?q=%23-application-features)
-  * [Model Details](https://www.google.com/search?q=%23-model-details)
-  * [API Reference](https://www.google.com/search?q=%23-api-reference)
-  * [Installation & Setup](https://www.google.com/search?q=%23-installation--setup)
-  * [Project Structure](https://www.google.com/search?q=%23-project-structure)
-
+  * Project Overview
+  * Architecture
+  * Milestones
+      * Data Collection & Preprocessing
+      * EDA & Feature Engineering
+      * Predictive Modeling
+      * Web App & Deployment
+  * Application Features
+  * Model Details
+  * API Reference
+  * Installation & Setup
+  * Project Structure
 -----
 
 ## 🎯 Project Overview

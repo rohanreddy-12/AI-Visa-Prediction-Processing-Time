@@ -31,16 +31,7 @@ Experience the live application here: **[Visa Prediction App](https://ai-visa-pr
 
 </div>
 
-\<p\>
-\<a href="[https://ai-visa-prediction-processing-time-rohan.onrender.com](https://ai-visa-prediction-processing-time-rohan.onrender.com)"\>
-\<img src="[https://img.shields.io/badge/](https://img.shields.io/badge/)🚀%20Live%20Demo-Open%20App-brightgreen?style=for-the-badge"/\>
-\</a\>
-\&nbsp;
-\<a href="[https://drive.google.com/file/d/1p4hH\_vcX3ZeKZgFjOA-cthwVXEycGRfr/view?usp=sharing](https://drive.google.com/file/d/1p4hH_vcX3ZeKZgFjOA-cthwVXEycGRfr/view?usp=sharing)"\>
-\<img src="[https://img.shields.io/badge/](https://img.shields.io/badge/)🎬%20Demo%20Video-Watch-red?style=for-the-badge\&logo=google-drive"/\>
-\</a\>
-\</p\>
-\</div\>
+
 
 -----
 

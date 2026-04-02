@@ -16,7 +16,14 @@ Predict H-1B visa processing time using Machine Learning (3.2M+ records)
 🚀 [Live App](https://ai-visa-prediction-processing-time-rohan.onrender.com/)
 🎬 [Demo Video](https://drive.google.com/file/d/14674a_8mZg4HyCXiDaZHxZrbjKV-CdKz/view?usp=drive_link)
 
-
+📦 Key Dependencies
+xgboost: 2.0.3
+flask: 3.0.0
+flask-cors: 4.0.0
+numpy: 1.26.2
+scikit-learn: 1.4.0
+gunicorn: 21.2.0
+pandas: 2.2.0
 
 
 
@@ -225,33 +232,47 @@ python Milestone2.py
 
 -----
 
-## 📁 Project Structure
-
-```text
-AI-Visa-Prediction-Processing-Time/
-│
-├── app.py                               # Flask backend API
-├── index.html                           # Single-page frontend 
-├── requirements.txt                     # Python dependencies
-├── Procfile                             # Render deployment
-├── .python-version                      # 3.11.9
-├── MIT license.txt                      
-│
-├── xgboost_visa_model.pkl               # Trained XGBoost model (zlib-compressed)
-├── label_encoders.pkl                   # Fitted LabelEncoders 
-├── features.pkl                         # Exact feature order list 
-│
-├── part1_data_cleaning.py               # Data Cleaning Pipeline
-├── part2_eda_features.py                # EDA & Feature Engineering
-│
-├── Milestone 3/
-│   └── xgboost_fast_gpu_fixed.ipynb     # Model training notebook
-│
-└── Documents/
-    ├── Rohan_Agile_doc.xls
-    ├── Rohan_Defect_Tracker.xlsx
-    └── Rohan_Unit_Test_Plan.xlsx
-```
+📁 Project Structure
+.
+├── Documents
+│   ├── Rohan_Agile_doc.xls
+│   ├── Rohan_Defect_Tracker.xlsx
+│   └── Rohan_Unit_Test_Plan.xlsx
+├── MIT license.txt
+├── Milestone 3
+│   └── xgboost_fast_gpu_fixed.ipynb
+├── Milestone1
+│   └── Milestone1.py
+├── Milestone2-Outputs
+│   ├── Milestone2.py
+│   ├── eda10_feature_importance.png
+│   ├── eda1_processing_time_dist.png
+│   ├── eda2_case_status.png
+│   ├── eda2b_processing_by_status.png
+│   ├── eda3_wage_analysis.png
+│   ├── eda4_yearly_trends.png
+│   ├── eda4b_monthly_seasonal.png
+│   ├── eda5_top_employers.png
+│   ├── eda6_job_analysis.png
+│   ├── eda7_correlation_heatmap.png
+│   ├── eda8_fulltime_violin.png
+│   └── eda9_engineered_features.png
+├── Procfile
+├── app.py
+├── assets
+│   ├── api.png
+│   ├── cases.png
+│   ├── dashboard2.png
+│   ├── dashboard3.png
+│   ├── estimator.png
+│   ├── estimator2.png
+│   ├── prediction.png
+│   └── trends.png
+├── features (1).pkl
+├── index.html
+├── label_encoders (3).pkl
+├── requirements.txt
+└── xgboost_visa_model (1).pkl
 
 -----
 

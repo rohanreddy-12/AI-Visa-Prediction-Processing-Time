@@ -50,7 +50,7 @@ pandas: 2.2.0
       * Predictive Modeling
       * Web App & Deployment
   * Application Features
-  * Model Details
+  * Datasets
   * API Reference
   * Installation & Setup
   * Project Structure
@@ -194,6 +194,16 @@ The Flask backend serves a single-page frontend across five sections: Time Estim
 
 -----
 
+## 📂 Datasets
+
+| Dataset | Source | Role in Project |
+|---|---|---|
+| `h1b_kaggle_original.csv` | [Kaggle — H-1B Non-Immigrant Labour Visa](https://www.kaggle.com/datasets/thedevastator/h-1b-non-immigrant-labour-visa) | Raw input — Milestone 1 cleaning & Milestone 3 model training |
+| `h1b_cleaned.csv` | [Google Drive](https://drive.google.com/file/d/1qYOUJrZ4kmXsKajm3vPsQi4acnxEyqfo/view?usp=drive_link) | Milestone 1 output — Milestone 2 EDA input |
+| `h1b_features.csv` | [Google Drive](https://drive.google.com/file/d/12XJjIe9uWv0vys0EJW2YnDrvS9w62LXH/view?usp=drive_link) | Milestone 2 output — model trained on original dataset instead |
+
+> Place all three datasets in the repo root before running any milestone script.
+
 ## 🚀 Installation & Setup
 
 **Prerequisites:** Python 3.11.9
@@ -254,7 +264,7 @@ python Milestone2.py
   * **Deployment:** Render
   * **Internship:** Infosys Springboard
 
-\<div align="center"\>
-Made with ❤️ by Rohan Reddy<br>
-⭐ Star the repo if this helped you\!
-\</div\>
+<div align="center">
+Made with ❤️ by <a href="https://github.com/rohanreddy-12">Rohan Reddy</a>
+⭐ Star the repo if this helped you!
+</div>
